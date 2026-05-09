@@ -714,10 +714,10 @@ Copy
       Производство запускается после закрытия набора.<br>
       Отправка в течение 30 дней после закрытия.
     </p>
-    <form class="preorder-form" onsubmit="handleSubmit(event)">
-      <input class="form-input" type="text" placeholder="ИМЯ" required>
-      <input class="form-input" type="text" placeholder="TELEGRAM / ТЕЛЕФОН" required>
-      <select class="form-select" required>
+    <form class="preorder-form" action="https://formspree.io/f/xlgzpqkl" method="POST">
+      <input class="form-input" type="text" name="name"placeholder="ИМЯ" required>
+      <input class="form-input" type="text" name="contact" placeholder="TELEGRAM / ТЕЛЕФОН" required>
+      <select class="form-select" name="size" required>
         <option value="" disabled selected>РАЗМЕР</option>
         <option value="S">S</option>
         <option value="M">M</option>
