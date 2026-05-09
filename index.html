@@ -1,0 +1,732 @@
+Index · HTML
+Copy
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALETSKI — PARADIGM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English&family=Share+Tech+Mono&display=swap');
+ 
+    :root {
+      --black: #000000;
+      --off-black: #050505;
+      --dark: #0a0a0a;
+      --border: #111111;
+      --muted: #333333;
+      --dim: #555555;
+      --light: #aaaaaa;
+      --white: #f0f0f0;
+      --font-serif: 'IM Fell English', Georgia, serif;
+      --font-mono: 'Share Tech Mono', monospace;
+    }
+ 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-mono);
+      cursor: crosshair;
+      overflow-x: hidden;
+    }
+ 
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--muted); }
+ 
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      mix-blend-mode: difference;
+    }
+ 
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 14px;
+      letter-spacing: .3em;
+      color: var(--white);
+      text-decoration: none;
+    }
+ 
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+ 
+    .nav-links a {
+      font-size: 9px;
+      letter-spacing: .25em;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color .3s;
+    }
+ 
+    .nav-links a:hover { color: var(--white); }
+ 
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, #0f0f0f 0%, #000 70%);
+    }
+ 
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+ 
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+ 
+    .hero-eyebrow {
+      font-size: 9px;
+      letter-spacing: .5em;
+      color: var(--muted);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp .8s .2s forwards;
+    }
+ 
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(64px, 12vw, 140px);
+      font-weight: 400;
+      letter-spacing: .15em;
+      line-height: 1;
+      color: var(--white);
+      opacity: 0;
+      animation: fadeUp .8s .4s forwards;
+    }
+ 
+    .hero-sub {
+      margin-top: 24px;
+      font-size: 10px;
+      letter-spacing: .4em;
+      color: var(--dim);
+      opacity: 0;
+      animation: fadeUp .8s .6s forwards;
+    }
+ 
+    .hero-coords {
+      position: absolute;
+      bottom: 40px;
+      right: 48px;
+      font-size: 9px;
+      letter-spacing: .15em;
+      color: var(--muted);
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp .8s 1s forwards;
+    }
+ 
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      letter-spacing: .3em;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp .8s 1.2s forwards, blink 2s 2s infinite;
+    }
+ 
+    /* CONCEPT */
+    .concept {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--border);
+    }
+ 
+    .concept-left {
+      padding: 100px 80px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+ 
+    .section-label {
+      font-size: 9px;
+      letter-spacing: .4em;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+ 
+    .concept-title {
+      font-family: var(--font-serif);
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      color: var(--white);
+    }
+ 
+    .concept-text {
+      font-size: 12px;
+      color: var(--dim);
+      line-height: 2;
+      max-width: 400px;
+      margin-bottom: 48px;
+    }
+ 
+    .concept-coords {
+      font-size: 10px;
+      color: var(--muted);
+      line-height: 2;
+      border-left: 1px solid var(--border);
+      padding-left: 20px;
+    }
+ 
+    .concept-right {
+      background: var(--off-black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 500px;
+    }
+ 
+    .concept-img-placeholder {
+      width: 70%;
+      aspect-ratio: 3/4;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+ 
+    .concept-img-placeholder span {
+      font-size: 11px;
+      letter-spacing: .2em;
+      color: var(--muted);
+    }
+ 
+    .concept-img-tag {
+      position: absolute;
+      bottom: -1px;
+      left: -1px;
+      background: var(--black);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      font-size: 9px;
+      letter-spacing: .2em;
+      color: var(--muted);
+    }
+ 
+    /* PRODUCT */
+    .product {
+      border-top: 1px solid var(--border);
+      padding: 100px 80px;
+    }
+ 
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 64px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .product-header h2 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: .1em;
+    }
+ 
+    .product-header span {
+      font-size: 9px;
+      letter-spacing: .3em;
+      color: var(--dim);
+    }
+ 
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+ 
+    .product-card {
+      background: var(--off-black);
+      aspect-ratio: 4/5;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: crosshair;
+      transition: border-color .3s;
+    }
+ 
+    .product-card:hover { border-color: var(--muted); }
+ 
+    .product-card:hover .card-overlay { opacity: 1; }
+ 
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+ 
+    .card-overlay-text {
+      font-size: 10px;
+      letter-spacing: .4em;
+      color: var(--white);
+      border: 1px solid var(--white);
+      padding: 12px 32px;
+    }
+ 
+    .card-placeholder {
+      font-size: 10px;
+      letter-spacing: .2em;
+      color: var(--muted);
+    }
+ 
+    .card-status {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 8px;
+      letter-spacing: .2em;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+    }
+ 
+    .card-info {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+    }
+ 
+    .card-name {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .15em;
+      color: var(--light);
+      margin-bottom: 6px;
+    }
+ 
+    .card-price {
+      display: block;
+      font-size: 10px;
+      color: var(--dim);
+    }
+ 
+    /* SIZE SELECTOR */
+    .size-selector {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+ 
+    .size-btn {
+      font-size: 9px;
+      letter-spacing: .1em;
+      color: var(--dim);
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition: all .2s;
+    }
+ 
+    .size-btn:hover, .size-btn.active {
+      color: var(--white);
+      border-color: var(--white);
+    }
+ 
+    /* PREORDER */
+    .preorder {
+      border-top: 1px solid var(--border);
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 48px;
+      text-align: center;
+      position: relative;
+    }
+ 
+    .preorder-title {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 6vw, 80px);
+      font-weight: 400;
+      letter-spacing: .2em;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp .8s .2s forwards;
+    }
+ 
+    .preorder-sub {
+      font-size: 11px;
+      color: var(--dim);
+      line-height: 2;
+      max-width: 480px;
+      margin-bottom: 48px;
+      letter-spacing: .05em;
+      opacity: 0;
+      animation: fadeUp .8s .4s forwards;
+    }
+ 
+    .preorder-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 400px;
+      opacity: 0;
+      animation: fadeUp .8s .6s forwards;
+    }
+ 
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+ 
+    .form-input {
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      color: var(--white);
+      outline: none;
+      transition: border-color .2s;
+      width: 100%;
+    }
+ 
+    .form-input::placeholder { color: var(--muted); }
+    .form-input:focus { border-color: var(--dim); }
+ 
+    .form-select {
+      background: var(--black);
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      color: var(--white);
+      outline: none;
+      cursor: pointer;
+      width: 100%;
+      appearance: none;
+    }
+ 
+    .form-select option { background: var(--black); }
+ 
+    .submit-btn {
+      background: transparent;
+      border: 1px solid var(--white);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: .4em;
+      color: var(--white);
+      cursor: crosshair;
+      transition: all .3s;
+      margin-top: 8px;
+    }
+ 
+    .submit-btn:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+ 
+    .preorder-note {
+      margin-top: 24px;
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: .2em;
+      opacity: 0;
+      animation: fadeUp .8s .8s forwards;
+    }
+ 
+    /* SUCCESS */
+    .success-msg {
+      display: none;
+      font-size: 11px;
+      letter-spacing: .2em;
+      color: var(--light);
+      margin-top: 16px;
+      text-align: center;
+    }
+ 
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+ 
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      letter-spacing: .3em;
+      color: var(--muted);
+    }
+ 
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+ 
+    .footer-links a {
+      font-size: 9px;
+      letter-spacing: .2em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+ 
+    .footer-links a:hover { color: var(--white); }
+ 
+    .footer-copy {
+      font-size: 9px;
+      color: var(--border);
+      letter-spacing: .1em;
+    }
+ 
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    @keyframes blink {
+      0%, 100% { opacity: .4; }
+      50% { opacity: 1; }
+    }
+ 
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .hero-coords { display: none; }
+      .concept { grid-template-columns: 1fr; }
+      .concept-left { padding: 60px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+      .concept-right { min-height: 400px; }
+      .product { padding: 60px 24px; }
+      .product-grid { grid-template-columns: 1fr; }
+      .product-card { aspect-ratio: 3/4; }
+      footer { flex-direction: column; gap: 24px; padding: 32px 24px; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">ALETSKI</a>
+    <ul class="nav-links">
+      <li><a href="#concept">CONCEPT</a></li>
+      <li><a href="#collection">COLLECTION</a></li>
+      <li><a href="#preorder">PREORDER</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">SS26 — PARADIGM COLLECTION</div>
+      <h1 class="hero-title">ALETSKI</h1>
+      <div class="hero-sub">無人 — NO ONE LEFT HERE</div>
+    </div>
+    <div class="hero-coords">
+      32.6297° NORTH<br>
+      129.7377° EAST<br>
+      HASHIMA ISLAND
+    </div>
+    <div class="hero-scroll">SCROLL ↓</div>
+  </section>
+ 
+  <!-- CONCEPT -->
+  <section class="concept" id="concept">
+    <div class="concept-left">
+      <div class="section-label">01 — CONCEPT</div>
+      <h2 class="concept-title">NO ONE<br>LEFT HERE</h2>
+      <p class="concept-text">
+        Paradigm — первая коллекция Aletski.<br><br>
+        Место без людей. Бетон, который помнит.
+        Зелень, которая возвращает.<br><br>
+        Каждая вещь документирует реальное место.
+        Координаты существуют. Можешь проверить.
+      </p>
+      <div class="concept-coords">
+        32.6297° NORTH — 129.7377° EAST<br>
+        無人 / HASHIMA ISLAND, JAPAN<br>
+        ABANDONED 1974
+      </div>
+    </div>
+    <div class="concept-right">
+      <div class="concept-img-placeholder">
+        <!-- Сюда вставишь своё фото мокапа -->
+        <span>LOOKBOOK IMAGE</span>
+        <div class="concept-img-tag">PARADIGM / SS26</div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- COLLECTION -->
+  <section class="product" id="collection">
+    <div class="product-header">
+      <h2>PARADIGM / SS26</h2>
+      <span>LIMITED PREORDER — 2026</span>
+    </div>
+    <div class="product-grid">
+      <!-- CARD 1 -->
+      <div class="product-card">
+        <!-- Сюда вставишь img с фото спины -->
+        <div class="card-placeholder">BACK VIEW</div>
+        <div class="card-status">PREORDER OPEN</div>
+        <div class="card-info">
+          <span class="card-name">PARADIGM TEE / BLACK</span>
+          <span class="card-price">2 500 ₽</span>
+          <div class="size-selector">
+            <button class="size-btn" onclick="selectSize(this)">S</button>
+            <button class="size-btn" onclick="selectSize(this)">M</button>
+            <button class="size-btn" onclick="selectSize(this)">L</button>
+            <button class="size-btn" onclick="selectSize(this)">XL</button>
+          </div>
+        </div>
+        <div class="card-overlay">
+          <div class="card-overlay-text">DETAILS ↗</div>
+        </div>
+      </div>
+      <!-- CARD 2 -->
+      <div class="product-card">
+        <!-- Сюда вставишь img с фото фронта -->
+        <div class="card-placeholder">FRONT VIEW</div>
+        <div class="card-status">PREORDER OPEN</div>
+        <div class="card-info">
+          <span class="card-name">PARADIGM TEE / BLACK</span>
+          <span class="card-price">2 500 ₽</span>
+        </div>
+        <div class="card-overlay">
+          <div class="card-overlay-text">DETAILS ↗</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- PREORDER -->
+  <section class="preorder" id="preorder">
+    <div class="section-label">03 — PREORDER</div>
+    <h2 class="preorder-title">RESERVE NOW</h2>
+    <p class="preorder-sub">
+      Лимитированный преордер.<br>
+      Производство запускается после закрытия набора.<br>
+      Отправка в течение 30 дней после закрытия.
+    </p>
+    <form class="preorder-form" onsubmit="handleSubmit(event)">
+      <input class="form-input" type="text" placeholder="ИМЯ" required>
+      <input class="form-input" type="text" placeholder="TELEGRAM / ТЕЛЕФОН" required>
+      <select class="form-select" required>
+        <option value="" disabled selected>РАЗМЕР</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+      </select>
+      <button type="submit" class="submit-btn">ОФОРМИТЬ ПРЕОРДЕР</button>
+    </form>
+    <div class="success-msg" id="successMsg">
+      ЗАЯВКА ПРИНЯТА — СВЯЖЕМСЯ В ТЕЧЕНИЕ 24 ЧАСОВ
+    </div>
+    <div class="preorder-note">PARADIGM / LIMITED EDITION — 2026</div>
+  </section>
+ 
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">ALETSKI</div>
+    <ul class="footer-links">
+      <li><a href="#" target="_blank">INSTAGRAM</a></li>
+      <li><a href="#" target="_blank">TELEGRAM</a></li>
+      <li><a href="mailto:">CONTACT</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 ALETSKI</div>
+  </footer>
+ 
+  <script>
+    function selectSize(btn) {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+ 
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('successMsg').style.display = 'block';
+      e.target.style.display = 'none';
+    }
+ 
+    // Fade in sections on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+ 
+    document.querySelectorAll('.concept-left, .concept-right, .product-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity .8s, transform .8s';
+      observer.observe(el);
+    });
+  </script>
+ 
+</body>
+</html>
+ 
