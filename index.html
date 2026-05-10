@@ -267,7 +267,14 @@
     </p>
     <form class="preorder-form" action="https://formspree.io/f/xlgzpqkl" method="POST">
       <input class="form-input" type="text" name="name" placeholder="ИМЯ" required>
-      <input class="form-input" type="text" name="contact" placeholder="TELEGRAM / ТЕЛЕФОН" required>
+      <select class="form-select" name="contact_type" required style="margin-bottom:0;">
+  <option value="" disabled selected>СПОСОБ СВЯЗИ</option>
+  <option value="Telegram">Telegram</option>
+  <option value="Instagram">Instagram</option>
+  <option value="ВКонтакте">ВКонтакте</option>
+  <option value="Телефон">Телефон (РФ)</option>
+</select>
+<input class="form-input" type="text" name="contact" placeholder="@ или номер — проверьте правильность" required>
       <!-- Скрытое поле — товар подставляется автоматически -->
       <input type="hidden" name="product" id="product-field" value="не указан">
       <select class="form-select" name="size" required>
@@ -279,9 +286,10 @@
         <option value="XXL">XXL</option>
       </select>
       <!-- Отображение выбранного товара -->
-      <div id="product-display" style="font-size:10px;letter-spacing:.2em;color:#555;text-align:left;padding:8px 0;">ТОВАР: <span id="product-display-text" style="color:#888;">не выбран</span></div>
-      <button type="submit" class="submit-btn">ОФОРМИТЬ ПРЕОРДЕР</button>
-    </form>
+      <div id="product-display" style="font-size:10px;letter-spacing:.2em;color:#555;text-align:left;padding:8px 0;">ТОВАР: <span id="product-display-text" style="color:#888;">не выбран (нажмите на товар выше)</span></div>
+<input type="text" name="_gotcha" style="display:none;">
+<button type="submit" class="submit-btn">ОФОРМИТЬ ПРЕОРДЕР</button>
+</form>
     <div class="success-msg" id="successMsg">ЗАЯВКА ПРИНЯТА — СВЯЖЕМСЯ В ТЕЧЕНИЕ 24 ЧАСОВ</div>
     <div class="preorder-note">PARADIGM / LIMITED EDITION — 2026</div>
   </section>
