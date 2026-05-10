@@ -141,7 +141,6 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/109135842" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 </head>
-</head>
 <body>
 
   <nav>
@@ -287,7 +286,7 @@
   <option value="ВКонтакте">ВКонтакте</option>
   <option value="Телефон">Телефон (РФ)</option>
 </select>
-<input class="form-input" type="text" name="contact" placeholder="@ или номер — проверьте правильность" required>
+<input class="form-input" type="text" name="contact" placeholder="@ или номер — только латиница" required pattern="[a-zA-Z0-9@._\-\+\s]+" title="Только латинские буквы, цифры и @ символ">
       <!-- Скрытое поле — товар подставляется автоматически -->
       <select class="form-select" name="product" id="product-field" required>
   <option value="" disabled selected>ВЫБЕРИТЕ ТОВАР</option>
@@ -303,7 +302,7 @@
         <option value="XXL">XXL</option>
       </select>
       <!-- Отображение выбранного товара -->
-      <div id="product-display" style="font-size:10px;letter-spacing:.2em;color:#555;text-align:left;padding:8px 0;">ТОВАР: <span id="product-display-text" style="color:#888;">не выбран (нажмите на товар выше)</span></div>
+  
 <input type="text" name="_gotcha" style="display:none;">
 <button type="submit" class="submit-btn">ОФОРМИТЬ ПРЕОРДЕР</button>
 </form>
@@ -335,10 +334,14 @@
     }
 
     function setProduct(name) {
-      document.getElementById('product-field').value = name;
-      document.getElementById('product-display-text').textContent = name;
-      document.getElementById('product-display-text').style.color = '#ccc';
+  const select = document.getElementById('product-field');
+  for (let i = 0; i < select.options.length; i++) {
+    if (select.options[i].value === name) {
+      select.selectedIndex = i;
+      break;
     }
+  }
+}
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
