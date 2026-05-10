@@ -27,12 +27,7 @@
     ::-webkit-scrollbar-track { background: var(--black); }
     ::-webkit-scrollbar-thumb { background: var(--muted); }
 
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 20px 48px; mix-blend-mode: difference;
-    }
-
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; mix-blend-mode: difference; }
     .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a { font-size: 9px; letter-spacing: .25em; color: var(--dim); text-decoration: none; transition: color .3s; }
     .nav-links a:hover { color: var(--white); }
@@ -63,7 +58,7 @@
     .product-header span { font-size: 9px; letter-spacing: .3em; color: var(--dim); }
     .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
 
-    .product-card { background: var(--off-black); aspect-ratio: 4/5; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: crosshair; transition: border-color .3s; }
+    .product-card { background: var(--off-black); aspect-ratio: 4/5; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: crosshair; transition: border-color .3s; touch-action: pan-y; }
     .product-card:hover { border-color: var(--muted); }
     .product-card:hover .card-overlay { opacity: 1; }
 
@@ -71,7 +66,6 @@
     .card-overlay-btn { font-size: 10px; letter-spacing: .4em; color: var(--white); border: 1px solid var(--white); padding: 12px 32px; background: transparent; cursor: pointer; font-family: var(--font-mono); text-decoration: none; display: inline-block; }
     .card-overlay-btn:hover { background: var(--white); color: var(--black); }
 
-    /* Card info — brighter text */
     .card-bottom { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 20px 20px; background: linear-gradient(transparent, rgba(0,0,0,.85)); z-index: 2; }
     .card-status { position: absolute; top: 20px; right: 20px; font-size: 8px; letter-spacing: .2em; color: #aaa; border: 1px solid #333; padding: 4px 10px; z-index: 2; background: rgba(0,0,0,.6); }
     .card-name { display: block; font-size: 11px; letter-spacing: .15em; color: #fff; margin-bottom: 4px; }
@@ -81,15 +75,16 @@
     .size-btn { font-size: 9px; letter-spacing: .1em; color: #aaa; border: 1px solid #333; background: rgba(0,0,0,.5); padding: 4px 8px; cursor: pointer; font-family: var(--font-mono); transition: all .2s; }
     .size-btn:hover, .size-btn.active { color: #fff; border-color: #fff; }
 
-    /* Slider */
     .slider-wrap { position: absolute; inset: 0; }
     .slider-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .4s; }
     .slider-wrap img.active { opacity: 1; }
     .slider-dots { position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 4; }
     .slider-dot { width: 5px; height: 5px; border-radius: 50%; background: #fff; border: none; cursor: pointer; opacity: .3; transition: opacity .2s; padding: 0; }
     .slider-dot.active { opacity: 1; }
-
-    /* Preorder */
+.slider-arrows { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 12px; z-index: 4; pointer-events: none; }
+.slider-arrow { width: 28px; height: 28px; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.15); color: #fff; font-size: 11px; display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: all; transition: background .2s; }
+.slider-arrow:hover { background: rgba(0,0,0,.7); }
+    
     .preorder { border-top: 1px solid var(--border); min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 48px; text-align: center; }
     .preorder-title { font-family: var(--font-serif); font-size: clamp(36px, 6vw, 80px); font-weight: 400; letter-spacing: .2em; margin-bottom: 24px; opacity: 0; animation: fadeUp .8s .2s forwards; }
     .preorder-sub { font-size: 11px; color: var(--dim); line-height: 2; max-width: 480px; margin-bottom: 48px; letter-spacing: .05em; opacity: 0; animation: fadeUp .8s .4s forwards; }
@@ -129,17 +124,12 @@
     }
   </style>
   <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109135842', 'ym');
-    ym(109135842, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/109135842" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=109135842','ym');
+    ym(109135842,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/109135842" style="position:absolute;left:-9999px;" alt=""/></div></noscript>
+  <!-- /Yandex.Metrika counter -->
 </head>
 <body>
 
@@ -200,11 +190,15 @@
     <div class="product-grid">
 
       <!-- PARADIGM -->
-      <div class="product-card">
+      <div class="product-card" id="card-p">
         <div class="slider-wrap">
           <img src="back.png" class="active" id="p-slide-0">
           <img src="front.png" id="p-slide-1">
         </div>
+        <div class="slider-arrows">
+  <button class="slider-arrow" onclick="goSlide('p',0)">←</button>
+  <button class="slider-arrow" onclick="goSlide('p',1)">→</button>
+</div>
         <div class="slider-dots">
           <button class="slider-dot active" onclick="goSlide('p',0)"></button>
           <button class="slider-dot" onclick="goSlide('p',1)"></button>
@@ -226,11 +220,15 @@
       </div>
 
       <!-- LOOK AT YOU -->
-      <div class="product-card">
+      <div class="product-card" id="card-l">
         <div class="slider-wrap">
           <img src="lay_front.png" class="active" id="l-slide-0">
           <img src="lay_back.png" id="l-slide-1">
         </div>
+        <div class="slider-arrows">
+  <button class="slider-arrow" onclick="goSlide('l',0)">←</button>
+  <button class="slider-arrow" onclick="goSlide('l',1)">→</button>
+</div>
         <div class="slider-dots">
           <button class="slider-dot active" onclick="goSlide('l',0)"></button>
           <button class="slider-dot" onclick="goSlide('l',1)"></button>
@@ -255,45 +253,27 @@
   <section class="preorder" id="preorder">
     <div class="section-label">03 — PREORDER</div>
     <h2 class="preorder-title">RESERVE NOW</h2>
-    <div style="margin-bottom:40px;width:100%;max-width:500px;">
-      <div style="font-size:9px;letter-spacing:.3em;color:#555;margin-bottom:16px;text-align:left;">РАЗМЕРНАЯ СЕТКА</div>
-      <table style="width:100%;border-collapse:collapse;font-family:monospace;font-size:11px;">
-        <tr style="border-bottom:1px solid #111;">
-          <td style="padding:10px 0;color:#555;">РАЗМЕР</td>
-          <td style="padding:10px 0;color:#555;">ГРУДЬ</td>
-          <td style="padding:10px 0;color:#555;">ДЛИНА</td>
-          <td style="padding:10px 0;color:#555;">ПЛЕЧО</td>
-        </tr>
-        <tr style="border-bottom:1px solid #0d0d0d;"><td style="padding:10px 0;color:#aaa;">S</td><td style="padding:10px 0;color:#666;">96 см</td><td style="padding:10px 0;color:#666;">68 см</td><td style="padding:10px 0;color:#666;">46 см</td></tr>
-        <tr style="border-bottom:1px solid #0d0d0d;"><td style="padding:10px 0;color:#aaa;">M</td><td style="padding:10px 0;color:#666;">100 см</td><td style="padding:10px 0;color:#666;">70 см</td><td style="padding:10px 0;color:#666;">48 см</td></tr>
-        <tr style="border-bottom:1px solid #0d0d0d;"><td style="padding:10px 0;color:#aaa;">L</td><td style="padding:10px 0;color:#666;">106 см</td><td style="padding:10px 0;color:#666;">72 см</td><td style="padding:10px 0;color:#666;">50 см</td></tr>
-        <tr style="border-bottom:1px solid #0d0d0d;"><td style="padding:10px 0;color:#aaa;">XL</td><td style="padding:10px 0;color:#666;">112 см</td><td style="padding:10px 0;color:#666;">74 см</td><td style="padding:10px 0;color:#666;">52 см</td></tr>
-        <tr><td style="padding:10px 0;color:#aaa;">XXL</td><td style="padding:10px 0;color:#666;">118 см</td><td style="padding:10px 0;color:#666;">76 см</td><td style="padding:10px 0;color:#666;">54 см</td></tr>
-      </table>
-      <div style="font-size:9px;color:#333;margin-top:12px;letter-spacing:.1em;">* оверсайз посадка — рекомендуем свой размер или на один меньше</div>
-    </div>
     <p class="preorder-sub">
       Лимитированный преордер.<br>
       Производство запускается после закрытия набора.<br>
       Отправка в течение 30 дней после закрытия.
     </p>
     <form class="preorder-form" action="https://api.web3forms.com/submit" method="POST">
-<input type="hidden" name="access_key" value="4cb32ea2-adf4-4080-a952-a8148e6a7392">
+      <input type="hidden" name="access_key" value="4cb32ea2-adf4-4080-a952-a8148e6a7392">
       <input class="form-input" type="text" name="name" placeholder="ИМЯ" required>
-      <select class="form-select" name="contact_type" required style="margin-bottom:0;">
-  <option value="" disabled selected>СПОСОБ СВЯЗИ</option>
-  <option value="Telegram">Telegram</option>
-  <option value="Instagram">Instagram</option>
-  <option value="ВКонтакте">ВКонтакте</option>
-  <option value="Телефон">Телефон (РФ)</option>
-</select>
-<input class="form-input" type="text" name="contact" placeholder="@ или номер — только латиница" required pattern="[a-zA-Z0-9@._\-\+\s]+" title="Только латинские буквы, цифры и @ символ">
-      <!-- Скрытое поле — товар подставляется автоматически -->
+      <select class="form-select" name="contact_type" required>
+        <option value="" disabled selected>СПОСОБ СВЯЗИ</option>
+        <option value="Telegram">Telegram</option>
+        <option value="Instagram">Instagram</option>
+        <option value="ВКонтакте">ВКонтакте</option>
+        <option value="Телефон">Телефон (РФ)</option>
+      </select>
+      <input class="form-input" type="text" name="contact" placeholder="@ или номер — только латиница" required pattern="[a-zA-Z0-9@._\-\+\s]+" title="Только латинские буквы, цифры и @ символ">
       <select class="form-select" name="product" id="product-field" required>
-  <option value="" disabled selected>ВЫБЕРИТЕ ТОВАР</option>
-  <option value="PARADIGM TEE / BLACK">PARADIGM TEE / BLACK — 2 500 ₽</option>
-  <option value="LOOK AT YOU / BLACK">LOOK AT YOU / BLACK — 2 500 ₽</option>
-</select>
+        <option value="" disabled selected>ВЫБЕРИТЕ ТОВАР</option>
+        <option value="PARADIGM TEE / BLACK">PARADIGM TEE / BLACK — 2 500 ₽</option>
+        <option value="LOOK AT YOU / BLACK">LOOK AT YOU / BLACK — 2 500 ₽</option>
+      </select>
       <select class="form-select" name="size" required>
         <option value="" disabled selected>РАЗМЕР</option>
         <option value="S">S</option>
@@ -302,11 +282,9 @@
         <option value="XL">XL</option>
         <option value="XXL">XXL</option>
       </select>
-      <!-- Отображение выбранного товара -->
-  
-<input type="text" name="_gotcha" style="display:none;">
-<button type="submit" class="submit-btn">ОФОРМИТЬ ПРЕОРДЕР</button>
-</form>
+      <input type="text" name="_gotcha" style="display:none;">
+      <button type="submit" class="submit-btn">ОФОРМИТЬ ПРЕОРДЕР</button>
+    </form>
     <div class="success-msg" id="successMsg">ЗАЯВКА ПРИНЯТА — СВЯЖЕМСЯ В ТЕЧЕНИЕ 24 ЧАСОВ</div>
     <div class="preorder-note">PARADIGM / LIMITED EDITION — 2026</div>
   </section>
@@ -335,14 +313,50 @@
     }
 
     function setProduct(name) {
-  const select = document.getElementById('product-field');
-  for (let i = 0; i < select.options.length; i++) {
-    if (select.options[i].value === name) {
-      select.selectedIndex = i;
-      break;
+      const select = document.getElementById('product-field');
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === name) { select.selectedIndex = i; break; }
+      }
     }
-  }
-}
+
+    // Swipe support
+    function addSwipe(cardId, prefix, total) {
+      const card = document.getElementById(cardId);
+      let startX = 0, startY = 0, current = 0;
+
+      card.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+
+      card.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        const dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+          if (dx < 0) current = Math.min(current + 1, total - 1);
+          else current = Math.max(current - 1, 0);
+          goSlide(prefix, current);
+        }
+      }, { passive: true });
+
+      // Mouse drag for desktop
+      let dragging = false, mouseStartX = 0;
+      card.addEventListener('mousedown', e => { dragging = true; mouseStartX = e.clientX; });
+      card.addEventListener('mouseup', e => {
+        if (!dragging) return;
+        dragging = false;
+        const dx = e.clientX - mouseStartX;
+        if (Math.abs(dx) > 40) {
+          if (dx < 0) current = Math.min(current + 1, total - 1);
+          else current = Math.max(current - 1, 0);
+          goSlide(prefix, current);
+        }
+      });
+      card.addEventListener('mouseleave', () => { dragging = false; });
+    }
+
+    addSwipe('card-p', 'p', 2);
+    addSwipe('card-l', 'l', 2);
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
