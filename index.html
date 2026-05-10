@@ -289,7 +289,11 @@
 </select>
 <input class="form-input" type="text" name="contact" placeholder="@ или номер — проверьте правильность" required>
       <!-- Скрытое поле — товар подставляется автоматически -->
-      <input type="hidden" name="product" id="product-field" value="не указан">
+      <select class="form-select" name="product" id="product-field" required>
+  <option value="" disabled selected>ВЫБЕРИТЕ ТОВАР</option>
+  <option value="PARADIGM TEE / BLACK">PARADIGM TEE / BLACK — 2 500 ₽</option>
+  <option value="LOOK AT YOU / BLACK">LOOK AT YOU / BLACK — 2 500 ₽</option>
+</select>
       <select class="form-select" name="size" required>
         <option value="" disabled selected>РАЗМЕР</option>
         <option value="S">S</option>
