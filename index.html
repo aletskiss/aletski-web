@@ -81,10 +81,39 @@
     .slider-dots { position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 4; }
     .slider-dot { width: 5px; height: 5px; border-radius: 50%; background: #fff; border: none; cursor: pointer; opacity: .3; transition: opacity .2s; padding: 0; }
     .slider-dot.active { opacity: 1; }
-.slider-arrows { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 12px; z-index: 4; pointer-events: none; }
-.slider-arrow { width: 28px; height: 28px; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.15); color: #fff; font-size: 11px; display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: all; transition: background .2s; }
-.slider-arrow:hover { background: rgba(0,0,0,.7); }
-    
+    .slider-arrows { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); display: flex; justify-content: space-between; padding: 0 12px; z-index: 4; pointer-events: none; }
+    .slider-arrow { width: 28px; height: 28px; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.15); color: #fff; font-size: 11px; display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: all; transition: background .2s; }
+    .slider-arrow:hover { background: rgba(0,0,0,.7); }
+
+    /* ── LOCK OVERLAY ── */
+    .lock-overlay {
+      position: absolute; inset: 0; z-index: 5;
+      background: rgba(0,0,0,.82);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px;
+      pointer-events: none;
+    }
+    .lock-icon {
+      font-size: 28px; opacity: .7; line-height: 1;
+      animation: lockPulse 3s ease-in-out infinite;
+    }
+    .lock-label {
+      font-size: 8px; letter-spacing: .45em; color: #888;
+    }
+    .lock-timer {
+      font-size: 13px; letter-spacing: .2em; color: #ccc;
+      font-family: var(--font-mono);
+      border: 1px solid #222;
+      padding: 8px 18px;
+      background: rgba(0,0,0,.5);
+    }
+    .lock-date {
+      font-size: 8px; letter-spacing: .25em; color: #555;
+    }
+    @keyframes lockPulse {
+      0%,100% { opacity: .5; } 50% { opacity: .9; }
+    }
+
     .preorder { border-top: 1px solid var(--border); min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 48px; text-align: center; }
     .preorder-title { font-family: var(--font-serif); font-size: clamp(36px, 6vw, 80px); font-weight: 400; letter-spacing: .2em; margin-bottom: 24px; opacity: 0; animation: fadeUp .8s .2s forwards; }
     .preorder-sub { font-size: 11px; color: var(--dim); line-height: 2; max-width: 480px; margin-bottom: 48px; letter-spacing: .05em; opacity: 0; animation: fadeUp .8s .4s forwards; }
@@ -94,6 +123,7 @@
     .form-input:focus { border-color: var(--dim); }
     .form-select { background: var(--black); border: 1px solid var(--border); padding: 14px 16px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; color: var(--white); outline: none; cursor: pointer; width: 100%; appearance: none; }
     .form-select option { background: var(--black); }
+    .form-select option:disabled { color: #444; }
     .submit-btn { background: transparent; border: 1px solid var(--white); padding: 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .4em; color: var(--white); cursor: crosshair; transition: all .3s; margin-top: 8px; }
     .submit-btn:hover { background: var(--white); color: var(--black); }
     .preorder-note { margin-top: 24px; font-size: 9px; color: var(--muted); letter-spacing: .2em; opacity: 0; animation: fadeUp .8s .8s forwards; }
@@ -189,32 +219,40 @@
     </div>
     <div class="product-grid">
 
-      <!-- PARADIGM -->
+      <!-- PARADIGM — locked with countdown -->
       <div class="product-card" id="card-p">
         <div class="slider-wrap">
           <img src="back.png" class="active" id="p-slide-0">
           <img src="front.png" id="p-slide-1">
         </div>
         <div class="slider-arrows">
-  <button class="slider-arrow" onclick="goSlide('p',0)">←</button>
-  <button class="slider-arrow" onclick="goSlide('p',1)">→</button>
-</div>
+          <button class="slider-arrow" onclick="goSlide('p',0)">←</button>
+          <button class="slider-arrow" onclick="goSlide('p',1)">→</button>
+        </div>
         <div class="slider-dots">
           <button class="slider-dot active" onclick="goSlide('p',0)"></button>
           <button class="slider-dot" onclick="goSlide('p',1)"></button>
         </div>
-        <div class="card-status">PREORDER OPEN</div>
+        <div class="card-status" id="paradigm-status">OPENS 15.06</div>
         <div class="card-bottom">
           <span class="card-name">PARADIGM TEE / BLACK</span>
           <span class="card-price">2 500 ₽</span>
-          <div class="size-selector">
-            <button class="size-btn" onclick="selectSize(this)">S</button>
-            <button class="size-btn" onclick="selectSize(this)">M</button>
-            <button class="size-btn" onclick="selectSize(this)">L</button>
-            <button class="size-btn" onclick="selectSize(this)">XL</button>
+          <div class="size-selector" id="size-paradigm">
+            <button class="size-btn" onclick="selectSize(this,'PARADIGM TEE / BLACK')">S</button>
+            <button class="size-btn" onclick="selectSize(this,'PARADIGM TEE / BLACK')">M</button>
+            <button class="size-btn" onclick="selectSize(this,'PARADIGM TEE / BLACK')">L</button>
+            <button class="size-btn" onclick="selectSize(this,'PARADIGM TEE / BLACK')">XL</button>
           </div>
         </div>
-        <div class="card-overlay">
+        <!-- Lock overlay — hidden after open -->
+        <div class="lock-overlay" id="lock-paradigm">
+          <div class="lock-icon">🔒</div>
+          <div class="lock-label">OPENS IN</div>
+          <div class="lock-timer" id="countdown-paradigm">--:--:--:--</div>
+          <div class="lock-date">15 JUNE 2026 · 15:00 MSK</div>
+        </div>
+        <!-- Overlay button — only shown when open -->
+        <div class="card-overlay" id="overlay-paradigm">
           <a class="card-overlay-btn" href="#preorder" onclick="setProduct('PARADIGM TEE / BLACK')">PREORDER ↗</a>
         </div>
       </div>
@@ -226,9 +264,9 @@
           <img src="lay_back.png" id="l-slide-1">
         </div>
         <div class="slider-arrows">
-  <button class="slider-arrow" onclick="goSlide('l',0)">←</button>
-  <button class="slider-arrow" onclick="goSlide('l',1)">→</button>
-</div>
+          <button class="slider-arrow" onclick="goSlide('l',0)">←</button>
+          <button class="slider-arrow" onclick="goSlide('l',1)">→</button>
+        </div>
         <div class="slider-dots">
           <button class="slider-dot active" onclick="goSlide('l',0)"></button>
           <button class="slider-dot" onclick="goSlide('l',1)"></button>
@@ -238,8 +276,8 @@
           <span class="card-name">LOOK AT YOU / BLACK</span>
           <span class="card-price">2 500 ₽</span>
           <div class="size-selector">
-            <button class="size-btn" onclick="selectSize(this)">L</button>
-            <button class="size-btn" onclick="selectSize(this)">XL</button>
+            <button class="size-btn" onclick="selectSize(this,'LOOK AT YOU / BLACK')">L</button>
+            <button class="size-btn" onclick="selectSize(this,'LOOK AT YOU / BLACK')">XL</button>
           </div>
         </div>
         <div class="card-overlay">
@@ -271,10 +309,11 @@
       <input class="form-input" type="text" name="contact" placeholder="@ или номер — только латиница" required pattern="[a-zA-Z0-9@._\-\+\s]+" title="Только латинские буквы, цифры и @ символ">
       <select class="form-select" name="product" id="product-field" required>
         <option value="" disabled selected>ВЫБЕРИТЕ ТОВАР</option>
-        <option value="PARADIGM TEE / BLACK">PARADIGM TEE / BLACK — 2 500 ₽</option>
+        <!-- Paradigm option — disabled until open -->
+        <option value="PARADIGM TEE / BLACK" id="paradigm-option" disabled>PARADIGM TEE / BLACK — 2 500 ₽ 🔒 (открытие 15.06)</option>
         <option value="LOOK AT YOU / BLACK">LOOK AT YOU / BLACK — 2 500 ₽</option>
       </select>
-      <select class="form-select" name="size" required>
+      <select class="form-select" name="size" id="size-field" required>
         <option value="" disabled selected>РАЗМЕР</option>
         <option value="S">S</option>
         <option value="M">M</option>
@@ -300,9 +339,91 @@
   </footer>
 
   <script>
-    function selectSize(btn) {
-      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    // ─── UNLOCK DATE: 15 June 2026 15:00 Moscow (UTC+3) ───
+    const UNLOCK_UTC = Date.UTC(2026, 5, 15, 12, 0, 0); // month is 0-indexed; 12:00 UTC = 15:00 MSK
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function checkUnlock() {
+      return Date.now() >= UNLOCK_UTC;
+    }
+
+    function applyUnlockState() {
+      const open = checkUnlock();
+      const lockEl = document.getElementById('lock-paradigm');
+      const overlayEl = document.getElementById('overlay-paradigm');
+      const statusEl = document.getElementById('paradigm-status');
+      const optionEl = document.getElementById('paradigm-option');
+      const sizeBtns = document.querySelectorAll('#size-paradigm .size-btn');
+
+      if (open) {
+        // Remove lock overlay
+        lockEl.style.display = 'none';
+        // Re-enable hover overlay
+        overlayEl.style.pointerEvents = '';
+        // Update status badge
+        statusEl.textContent = 'PREORDER OPEN';
+        // Enable in form
+        optionEl.disabled = false;
+        optionEl.textContent = 'PARADIGM TEE / BLACK — 2 500 ₽';
+        // Enable size buttons (they already work, just visual cue)
+        sizeBtns.forEach(b => b.style.opacity = '');
+      } else {
+        // Show lock overlay (pointer-events none so card hover still works on lock-free cards)
+        lockEl.style.display = 'flex';
+        // Disable preorder overlay click
+        overlayEl.style.pointerEvents = 'none';
+        overlayEl.style.opacity = '0';
+        // Dim size buttons for paradigm
+        sizeBtns.forEach(b => b.style.opacity = '0.3');
+      }
+    }
+
+    function updateCountdown() {
+      if (checkUnlock()) {
+        applyUnlockState();
+        return; // stop ticking
+      }
+      const diff = UNLOCK_UTC - Date.now();
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('countdown-paradigm').textContent =
+        pad(d) + 'd ' + pad(h) + ':' + pad(m) + ':' + pad(s);
+      setTimeout(updateCountdown, 1000);
+    }
+
+    // ─── SIZE BUTTON → scroll + autofill form ───
+    function selectSize(btn, productName) {
+      // Highlight only within the same size-selector
+      btn.closest('.size-selector').querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+
+      const size = btn.textContent.trim();
+      const isLocked = !checkUnlock() && productName === 'PARADIGM TEE / BLACK';
+
+      // Set product in form (only if not locked)
+      const productField = document.getElementById('product-field');
+      if (!isLocked) {
+        for (let i = 0; i < productField.options.length; i++) {
+          if (productField.options[i].value === productName) {
+            productField.selectedIndex = i;
+            break;
+          }
+        }
+        // Set size in form
+        const sizeField = document.getElementById('size-field');
+        for (let i = 0; i < sizeField.options.length; i++) {
+          if (sizeField.options[i].value === size) {
+            sizeField.selectedIndex = i;
+            break;
+          }
+        }
+        // Smooth scroll to preorder
+        document.getElementById('preorder').scrollIntoView({ behavior: 'smooth' });
+      }
+      // If locked — do nothing extra (no scroll, no autofill)
     }
 
     function goSlide(prefix, idx) {
@@ -319,16 +440,11 @@
       }
     }
 
-    // Swipe support
+    // ─── SWIPE SUPPORT ───
     function addSwipe(cardId, prefix, total) {
       const card = document.getElementById(cardId);
       let startX = 0, startY = 0, current = 0;
-
-      card.addEventListener('touchstart', e => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-      }, { passive: true });
-
+      card.addEventListener('touchstart', e => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; }, { passive: true });
       card.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - startX;
         const dy = e.changedTouches[0].clientY - startY;
@@ -338,13 +454,10 @@
           goSlide(prefix, current);
         }
       }, { passive: true });
-
-      // Mouse drag for desktop
       let dragging = false, mouseStartX = 0;
       card.addEventListener('mousedown', e => { dragging = true; mouseStartX = e.clientX; });
       card.addEventListener('mouseup', e => {
-        if (!dragging) return;
-        dragging = false;
+        if (!dragging) return; dragging = false;
         const dx = e.clientX - mouseStartX;
         if (Math.abs(dx) > 40) {
           if (dx < 0) current = Math.min(current + 1, total - 1);
@@ -358,6 +471,7 @@
     addSwipe('card-p', 'p', 2);
     addSwipe('card-l', 'l', 2);
 
+    // ─── SCROLL ANIMATIONS ───
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -373,6 +487,10 @@
       el.style.transition = 'opacity .8s, transform .8s';
       observer.observe(el);
     });
+
+    // ─── INIT ───
+    applyUnlockState();
+    updateCountdown();
   </script>
 
 </body>
