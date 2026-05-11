@@ -298,6 +298,7 @@
     </p>
     <form class="preorder-form" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="4cb32ea2-adf4-4080-a952-a8148e6a7392">
+      <input type="hidden" name="redirect" value="https://aletski.com/#order-success">
       <input class="form-input" type="text" name="name" placeholder="ИМЯ" required>
       <select class="form-select" name="contact_type" required>
         <option value="" disabled selected>СПОСОБ СВЯЗИ</option>
@@ -324,7 +325,7 @@
       <input type="text" name="_gotcha" style="display:none;">
       <button type="submit" class="submit-btn">ОФОРМИТЬ ЗАКАЗ</button>
     </form>
-    <div class="success-msg" id="successMsg">ЗАЯВКА ПРИНЯТА — СВЯЖЕМСЯ В ТЕЧЕНИЕ 24 ЧАСОВ</div>
+    <div class="success-msg" id="successMsg" style="display:none;">ЗАЯВКА ПРИНЯТА — СВЯЖЕМСЯ В ТЕЧЕНИЕ 24 ЧАСОВ</div>
    <div class="preorder-note">ALETSKI — SS26</div>
   </section>
 
@@ -347,7 +348,13 @@
     function checkUnlock() {
       return Date.now() >= UNLOCK_UTC;
     }
-
+window.addEventListener('load', () => {
+  if (window.location.hash === '#order-success') {
+    document.getElementById('successMsg').style.display = 'block';
+    document.getElementById('preorder').scrollIntoView({ behavior: 'smooth' });
+  }
+});
+    
     function applyUnlockState() {
       const open = checkUnlock();
       const lockEl = document.getElementById('lock-paradigm');
